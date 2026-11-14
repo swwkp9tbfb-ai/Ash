@@ -1,0 +1,663 @@
+<title>For Elodie</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap">
+<style>
+  /* Layout: one centred card floating over a pink sky of falling sweets */
+  :root {
+    --bg: #ffe3ee;
+    --bg-deep: #ffc9de;
+    --card: #fff8fb;
+    --ink: #5a1f3a;
+    --ink-soft: #8d4a68;
+    --pink: #ff5c9d;
+    --pink-dark: #d93a7e;
+    --line: #ffb3d1;
+    --font-display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+    --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html, body { min-height: 100%; }
+  body {
+    margin: 0;
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%) fixed;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.55;
+    padding-block: 40px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    overflow-x: hidden;
+  }
+
+  /* falling sweets */
+  #rain { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .drop {
+    position: absolute; top: -60px; line-height: 1;
+    animation: fall linear infinite;
+    will-change: transform;
+  }
+  @keyframes fall {
+    0%   { transform: translate3d(0, -60px, 0) rotate(0deg); }
+    50%  { transform: translate3d(var(--sway), 55vh, 0) rotate(var(--spin)); }
+    100% { transform: translate3d(0, 110vh, 0) rotate(calc(var(--spin) * 2)); }
+  }
+
+  main {
+    position: relative; z-index: 1;
+    max-width: 560px; margin: 0 auto;
+    display: grid; gap: 22px;
+  }
+  .card {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 28px;
+    padding: 32px 26px;
+    box-shadow: 0 14px 40px rgba(217, 58, 126, 0.18);
+  }
+  .hero { text-align: center; }
+  .hero .big { font-size: 54px; line-height: 1; }
+  h1 {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(34px, 9vw, 46px); line-height: 1.1;
+    margin: 12px 0 10px; color: var(--pink-dark);
+    text-wrap: balance;
+  }
+  h2 {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: 24px; margin: 0 0 6px; color: var(--pink-dark);
+  }
+  p { margin: 0 0 12px; }
+  .soft { color: var(--ink-soft); }
+
+  fieldset { border: 0; padding: 0; margin: 0 0 22px; min-width: 0; }
+  legend { font-weight: 700; margin-bottom: 10px; padding: 0; }
+  .choices { display: flex; flex-wrap: wrap; gap: 10px; }
+  .choices input { position: absolute; opacity: 0; pointer-events: none; }
+  .choices label {
+    border: 2px solid var(--line); background: #fff;
+    border-radius: 999px; padding: 9px 16px; cursor: pointer;
+    font-weight: 600; transition: transform .12s, background .12s, border-color .12s;
+  }
+  .choices label:hover { transform: translateY(-2px); border-color: var(--pink); }
+  .choices input:checked + label { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .choices input:focus-visible + label { outline: 3px solid var(--pink-dark); outline-offset: 2px; }
+
+  textarea, input[type="text"] {
+    width: 100%; font: inherit; color: var(--ink);
+    background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 11px 14px;
+  }
+  textarea:focus-visible, input[type="text"]:focus-visible { outline: 3px solid var(--pink); outline-offset: 1px; }
+  textarea { min-height: 84px; resize: vertical; }
+
+  button {
+    font: inherit; font-family: var(--font-display); font-weight: 600; font-size: 19px;
+    background: var(--pink); color: #fff; border: 0; border-radius: 999px;
+    padding: 14px 28px; cursor: pointer; width: 100%;
+    box-shadow: 0 6px 0 var(--pink-dark); transition: transform .1s, box-shadow .1s;
+  }
+  button:hover { transform: translateY(-1px); }
+  button:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--pink-dark); }
+  button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  a.btn {
+    display: block; margin-top: 18px; text-decoration: none; text-align: center;
+    font-family: var(--font-display); font-weight: 600; font-size: 19px;
+    background: var(--pink); color: #fff; border-radius: 999px; padding: 14px 28px;
+    box-shadow: 0 6px 0 var(--pink-dark); transition: transform .1s, box-shadow .1s;
+  }
+  a.btn:hover { transform: translateY(-1px); }
+  a.btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--pink-dark); }
+  a.btn:focus-visible, a.back:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  a.back, button.back { display: inline-block; margin-bottom: 12px; color: var(--pink-dark); font-weight: 700; text-decoration: none; }
+  button.back { background: none; border: 0; box-shadow: none; padding: 0; width: auto; font-family: var(--font-body); font-size: 17px; }
+  button.back:hover, button.back:active { transform: none; box-shadow: none; }
+  .cal-title { font-family: var(--font-display); font-weight: 600; font-size: 21px; text-align: center; margin: 18px 0 10px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .dow { text-align: center; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+  button.day {
+    width: auto; aspect-ratio: 1; padding: 0; font-family: var(--font-body); font-weight: 700; font-size: 16px;
+    background: #fff; color: var(--ink); border: 2px solid var(--line); border-radius: 14px; box-shadow: none;
+  }
+  button.day:hover { border-color: var(--pink); transform: translateY(-1px); }
+  button.day:active { transform: none; box-shadow: none; }
+  button.day.on { background: var(--pink); border-color: var(--pink-dark); color: #fff; }
+  .picked { text-align: center; font-weight: 700; color: var(--pink-dark); margin: 16px 0; min-height: 1.5em; }
+  button:disabled { opacity: .5; cursor: not-allowed; box-shadow: 0 6px 0 var(--pink-dark); transform: none; }
+  .typed { font-family: var(--font-display); font-weight: 600; font-size: clamp(34px, 10vw, 52px); color: var(--pink-dark); text-align: center; margin: 40px 0 36px; min-height: 1.2em; }
+  .caret { display: inline-block; width: 3px; height: .9em; background: var(--pink-dark); margin-left: 4px; vertical-align: -0.1em; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .reveal { opacity: 0; transition: opacity .5s; }
+  button.reveal:disabled { opacity: 0; pointer-events: none; }
+  button.reveal:not(:disabled) { opacity: 1; }
+  .cal-title { font-family: var(--font-display); font-weight: 600; font-size: 21px; text-align: center; margin: 18px 0 10px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .dow { text-align: center; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+  button.day {
+    width: auto; aspect-ratio: 1; padding: 0; font-family: var(--font-body); font-weight: 700; font-size: 16px;
+    background: #fff; color: var(--ink); border: 2px solid var(--line); border-radius: 14px; box-shadow: none;
+  }
+  button.day:hover { border-color: var(--pink); transform: translateY(-1px); }
+  button.day:active { transform: none; box-shadow: none; }
+  button.day.on { background: var(--pink); border-color: var(--pink-dark); color: #fff; }
+  .picked { text-align: center; font-weight: 700; color: var(--pink-dark); margin: 16px 0; min-height: 1.5em; }
+  button:disabled { cursor: not-allowed; }
+  #finishBtn:disabled { opacity: .45; }
+  .yesno { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  button.no { background: #fff; color: var(--pink-dark); border: 2px solid var(--pink); box-shadow: 0 6px 0 var(--line); }
+  button.no.dodging { position: fixed; z-index: 5; width: 120px; transition: left .18s ease-out, top .18s ease-out; }
+  .wtf { font-family: var(--font-display); font-weight: 600; font-size: 40px; text-align: center; color: var(--pink-dark); margin: 22px 0 0; animation: pop .25s ease-out; }
+  @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .rates { display: grid; gap: 18px; margin: 18px 0 8px; }
+  .rate-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 12px; }
+  .rate-row label { font-weight: 700; min-width: 0; }
+  .rate-val { font-family: var(--font-display); font-weight: 600; font-size: 20px; color: var(--pink-dark); min-width: 2ch; text-align: right; }
+  .rate-row.unset .rate-val { color: var(--line); }
+  .rate-row input[type=range] { grid-column: 1 / -1; width: 100%; accent-color: var(--pink); height: 28px; margin: 0; }
+  .rate-count { text-align: center; margin: 14px 0 18px; }
+  #rateNext:disabled, #timeNext:disabled, #bevNext:disabled { opacity: .45; }
+  #dim { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.4s;
+    background: radial-gradient(circle at 50% 38%, rgba(90, 31, 58, .55), rgba(28, 4, 18, .94)); }
+  body.drama #dim { opacity: 1; }
+  body.drama footer { color: #ffd9e8; }
+  body.drama .card { box-shadow: 0 0 70px rgba(255, 92, 157, .65), 0 14px 40px rgba(0, 0, 0, .4); }
+  #pbRain { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  #pbRain img { position: absolute; top: -90px; animation: fall linear infinite; will-change: transform; }
+  .finale { text-align: center; min-height: 420px; display: grid; align-content: start; gap: 8px; }
+  .finale .back { justify-self: start; }
+  .f1 { font-family: var(--font-display); font-weight: 500; font-size: 28px; color: var(--ink-soft); margin: 18px 0 0; min-height: 1.3em; }
+  .f2 { font-family: var(--font-display); font-weight: 500; font-size: 24px; color: var(--ink); margin: 0; min-height: 1.3em; }
+  .caret2::after { content: ""; display: inline-block; width: 3px; height: .85em; background: var(--pink-dark); margin-left: 3px; vertical-align: -0.08em; animation: blink 1s steps(1) infinite; }
+  .fbig { font-size: clamp(36px, 11vw, 56px); line-height: 1.05; margin: 14px 0 6px; color: var(--pink-dark); text-wrap: balance; animation: slam .7s cubic-bezier(.2,.9,.3,1.2) both; text-shadow: 0 4px 0 var(--line); }
+  @keyframes slam { 0% { transform: scale(3.2) rotate(-6deg); opacity: 0; } 60% { opacity: 1; } 100% { transform: scale(1) rotate(0); } }
+  @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-7px, 0, 0); } 40%, 60% { transform: translate3d(7px, 0, 0); } }
+  main.shake { animation: shake .6s both; }
+  .pb { height: 0; overflow: visible; }
+  .pb svg { width: 150px; height: auto; display: block; margin: 10px auto; animation: bob 1.3s ease-in-out infinite, drop-in .9s cubic-bezier(.2,.9,.3,1.3) both; }
+  @keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+  @keyframes drop-in { from { transform: translateY(-300px) scale(.4) rotate(-20deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  .pb.show { height: auto; }
+  .finale .yesno { margin-top: 18px; }
+  @media (prefers-reduced-motion: reduce) { .fbig, .pb svg, main.shake { animation: none; } #pbRain { display: none; } }
+  button.ghost {
+    background: #fff; color: var(--pink-dark); border: 2px solid var(--pink);
+    box-shadow: none; font-size: 16px; padding: 10px 20px; width: auto;
+  }
+
+  #answer pre {
+    white-space: pre-wrap; word-break: break-word; font: inherit;
+    background: #fff; border: 2px dashed var(--line); border-radius: 16px;
+    padding: 14px; margin: 14px 0;
+  }
+  footer { text-align: center; font-size: 14px; color: var(--ink-soft); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drop { animation: none; top: auto; }
+    .choices label, button { transition: none; }
+  }
+</style>
+
+<div id="rain" aria-hidden="true"></div>
+<div id="dim" aria-hidden="true"></div>
+<div id="pbRain" aria-hidden="true"></div>
+
+<main>
+  <section class="card hero" id="home">
+    <div class="big">🧁</div>
+    <h1>Hi Elodie, fill in this second meet form</h1>
+    <p>I had such a good time with you at NQ64, I'd love to see you again.</p>
+    <a class="btn" href="#form">Fill in form</a>
+  </section>
+
+  <section class="card" id="dateCard" hidden>
+    <a class="back" href="#">&larr; Back</a>
+    <h2>Choose the date</h2>
+    <p class="soft">Pick any day from the 1st of December to the 31st of December.</p>
+    <div class="cal">
+      <div class="cal-title">December 2026</div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <p class="picked" id="picked" aria-live="polite">No date chosen yet</p>
+    <button type="button" id="dateNext" disabled>Next question</button>
+  </section>
+
+  <section class="card" id="formCard" hidden>
+    <button type="button" class="back" id="typedBack">&larr; Back</button>
+    <p class="typed" id="typed" aria-label="Wait... actually?"><span id="typedText"></span><span class="caret" aria-hidden="true"></span></p>
+    <div class="yesno">
+      <button type="button" id="confirmBtn" class="reveal" disabled>Yes</button>
+      <button type="button" id="noBtn" class="reveal no" disabled>No</button>
+    </div>
+  </section>
+
+  <section class="card" id="dressCard" hidden>
+    <button type="button" class="back" id="dressBack">&larr; Back</button>
+    <h2>Preferred dress code</h2>
+    <p class="soft">How would you like to dress for our date?</p>
+    <div class="choices" id="dressChoices">
+      <input type="radio" name="dress" id="d1" value="casual"><label for="d1">Casual</label>
+      <input type="radio" name="dress" id="d2" value="smart casual"><label for="d2">Smart casual</label>
+      <input type="radio" name="dress" id="d3" value="fancy"><label for="d3">Fancy</label>
+      <input type="radio" name="dress" id="d4" value="no clothes"><label for="d4">No clothes</label>
+    </div>
+    <p class="wtf" id="wtf" role="status" hidden>wtf</p>
+    <button type="button" id="finishBtn" disabled style="margin-top:24px">Next question</button>
+  </section>
+
+  <section class="card" id="rateCard" hidden>
+    <button type="button" class="back" id="rateBack">&larr; Back</button>
+    <h2>Rate the activities</h2>
+    <p class="soft">Score each one from 1 (no thanks) to 10 (love it). Drag the slider for every activity.</p>
+    <div class="rates" id="rates"></div>
+    <p class="soft rate-count" id="rateCount" aria-live="polite"></p>
+    <button type="button" id="rateNext" disabled>Next question</button>
+  </section>
+
+  <section class="card" id="timeCard" hidden>
+    <button type="button" class="back" id="timeBack">&larr; Back</button>
+    <h2>Preferred time of day</h2>
+    <p class="soft">When would you like to meet?</p>
+    <div class="choices" id="timeChoices">
+      <input type="radio" name="time" id="tm1" value="morning"><label for="tm1">Morning</label>
+      <input type="radio" name="time" id="tm2" value="afternoon"><label for="tm2">Afternoon</label>
+      <input type="radio" name="time" id="tm3" value="evening"><label for="tm3">Evening</label>
+    </div>
+    <button type="button" id="timeNext" disabled style="margin-top:24px">Next question</button>
+  </section>
+
+  <section class="card" id="bevCard" hidden>
+    <button type="button" class="back" id="bevBack">&larr; Back</button>
+    <h2>Preferred beverage</h2>
+    <p class="soft">What are you drinking?</p>
+    <div class="choices" id="bevChoices">
+      <input type="radio" name="bev" id="b1" value="a wine glass full of vodka"><label for="b1">🍷 A wine glass full of vodka</label>
+    </div>
+    <button type="button" id="bevNext" disabled style="margin-top:24px">Next question</button>
+  </section>
+
+  <section class="card finale" id="finalCard" hidden>
+    <button type="button" class="back" id="finalBack">&larr; Back</button>
+    <p class="f1" id="f1" aria-live="polite"></p>
+    <p class="f2" id="f2"></p>
+    <div class="pb" id="pb" aria-hidden="true"></div>
+    <h2 class="fbig" id="fbig" hidden>Can Pearybara come?</h2>
+    <div class="yesno">
+      <button type="button" id="yes1" class="reveal" disabled>Yes</button>
+      <button type="button" id="yes2" class="reveal" disabled>Yes</button>
+    </div>
+  </section>
+
+  <section class="card" id="answer" hidden>
+    <h2>It's a date! 🎉</h2>
+    <p>Copy this and send it to me so I can get planning:</p>
+    <pre id="answerText"></pre>
+    <button type="button" class="ghost" id="copyBtn">Copy my answer</button>
+    <button type="button" class="ghost" id="editBtn">Change my answers</button>
+  </section>
+
+</main>
+
+<script>
+  // falling sweets
+  (function () {
+    var sweets = ['🍩','🧁','🍰','🍓','🍒','🍭','🍬','🍦','🍪','🍫','🥞','🍡','🧋','🍧','🍮','🎂'];
+    var rain = document.getElementById('rain');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var count = window.innerWidth < 600 ? 16 : 28;
+    for (var i = 0; i < count; i++) {
+      var d = document.createElement('span');
+      d.className = 'drop';
+      d.textContent = sweets[Math.floor(Math.random() * sweets.length)];
+      d.style.left = (Math.random() * 100) + '%';
+      d.style.fontSize = (20 + Math.random() * 26) + 'px';
+      d.style.opacity = (0.45 + Math.random() * 0.45).toFixed(2);
+      d.style.setProperty('--sway', (Math.random() * 80 - 40).toFixed(0) + 'px');
+      d.style.setProperty('--spin', (Math.random() * 120 - 60).toFixed(0) + 'deg');
+      d.style.animationDuration = (9 + Math.random() * 10).toFixed(1) + 's';
+      d.style.animationDelay = (-Math.random() * 18).toFixed(1) + 's';
+      if (reduce) d.style.top = (Math.random() * 90) + '%';
+      rain.appendChild(d);
+    }
+  })();
+
+  // typed intro slide
+  var formCard = document.getElementById('formCard');
+  var answer = document.getElementById('answer');
+  var answerText = document.getElementById('answerText');
+  var copyBtn = document.getElementById('copyBtn');
+  var home = document.getElementById('home');
+  var dressCard = document.getElementById('dressCard');
+  var rateCard = document.getElementById('rateCard');
+  var timeCard = document.getElementById('timeCard');
+  var bevCard = document.getElementById('bevCard');
+  var finalCard = document.getElementById('finalCard');
+  var runId = 0;
+  var pbEl = document.getElementById('pb'), pbRain = document.getElementById('pbRain');
+  var f1 = document.getElementById('f1'), f2 = document.getElementById('f2'), fbig = document.getElementById('fbig');
+  var yes1 = document.getElementById('yes1'), yes2 = document.getElementById('yes2');
+  var mainEl = document.querySelector('main');
+  var dateCard = document.getElementById('dateCard');
+  var calGrid = document.getElementById('calGrid');
+  var pickedEl = document.getElementById('picked');
+  var dateNext = document.getElementById('dateNext');
+  var chosen = null;
+  var YEAR = 2026;
+  var longFmt = function (day) {
+    return new Date(YEAR, 11, day).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  };
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function (n) {
+    var h = document.createElement('div'); h.className = 'dow'; h.textContent = n; calGrid.appendChild(h);
+  });
+  var offset = (new Date(YEAR, 11, 1).getDay() + 6) % 7;
+  for (var sp = 0; sp < offset; sp++) calGrid.appendChild(document.createElement('div'));
+  for (var day = 1; day <= 31; day++) {
+    (function (day) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'day'; b.textContent = day;
+      b.setAttribute('aria-label', longFmt(day));
+      b.addEventListener('click', function () {
+        chosen = day;
+        Array.prototype.forEach.call(calGrid.querySelectorAll('.day'), function (x) { x.classList.remove('on'); x.setAttribute('aria-pressed', 'false'); });
+        b.classList.add('on'); b.setAttribute('aria-pressed', 'true');
+        pickedEl.textContent = longFmt(day);
+        dateNext.disabled = false;
+      });
+      calGrid.appendChild(b);
+    })(day);
+  }
+  var typedText = document.getElementById('typedText');
+  var confirmBtn = document.getElementById('confirmBtn');
+  var noBtn = document.getElementById('noBtn');
+
+  // the No button runs away from the pointer, so it can't be pressed
+  function dodge(e) {
+    if (e && e.cancelable) e.preventDefault();
+    var w = noBtn.offsetWidth, h = noBtn.offsetHeight;
+    if (!noBtn.classList.contains('dodging')) {
+      var r = noBtn.getBoundingClientRect();
+      noBtn.classList.add('dodging');
+      noBtn.style.left = r.left + 'px'; noBtn.style.top = r.top + 'px';
+      noBtn.style.width = w + 'px';
+      void noBtn.offsetWidth;
+    }
+    var pad = 12, maxX = window.innerWidth - w - pad, maxY = window.innerHeight - h - pad;
+    var cur = noBtn.getBoundingClientRect(), x, y, tries = 0;
+    do {
+      x = pad + Math.random() * Math.max(0, maxX - pad);
+      y = pad + Math.random() * Math.max(0, maxY - pad);
+      tries++;
+    } while (tries < 20 && Math.hypot(x - cur.left, y - cur.top) < 160);
+    noBtn.style.left = x + 'px'; noBtn.style.top = y + 'px';
+    if (document.activeElement === noBtn) noBtn.blur();
+  }
+  ['pointerenter', 'pointerdown', 'touchstart', 'mousedown', 'click', 'focus'].forEach(function (ev) {
+    noBtn.addEventListener(ev, dodge, { passive: false });
+  });
+  var FULL = 'Wait... actually?';
+  var typeTimer = null;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function startTyping() {
+    clearTimeout(typeTimer);
+    confirmBtn.disabled = true; noBtn.disabled = true;
+    noBtn.classList.remove('dodging'); noBtn.style.left = noBtn.style.top = '';
+    if (reduceMotion) { typedText.textContent = FULL; confirmBtn.disabled = false; noBtn.disabled = false; return; }
+    typedText.textContent = '';
+    var i = 0;
+    (function tick() {
+      i++;
+      typedText.textContent = FULL.slice(0, i);
+      if (i >= FULL.length) { confirmBtn.disabled = false; noBtn.disabled = false; return; }
+      var ch = FULL.charAt(i - 1);
+      typeTimer = setTimeout(tick, ch === '.' ? 450 : 90 + Math.random() * 80);
+    })();
+  }
+
+  function route() {
+    var onForm = location.hash === '#form';
+    home.hidden = onForm;
+    dateCard.hidden = !onForm;
+    formCard.hidden = true;
+    dressCard.hidden = true;
+    rateCard.hidden = true;
+    timeCard.hidden = true;
+    bevCard.hidden = true;
+    finalCard.hidden = true;
+    stopFinale();
+    answer.hidden = true;
+    window.scrollTo(0, 0);
+    clearTimeout(typeTimer);
+  }
+  window.addEventListener('hashchange', route);
+  route();
+
+  dateNext.addEventListener('click', function () {
+    if (!chosen) return;
+    dateCard.hidden = true;
+    formCard.hidden = false;
+    window.scrollTo(0, 0);
+    startTyping();
+  });
+
+  document.getElementById('typedBack').addEventListener('click', function () {
+    clearTimeout(typeTimer);
+    formCard.hidden = true;
+    dateCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  confirmBtn.addEventListener('click', function () {
+    formCard.hidden = true;
+    dressCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  document.getElementById('dressBack').addEventListener('click', function () {
+    dressCard.hidden = true;
+    formCard.hidden = false;
+    window.scrollTo(0, 0);
+    startTyping();
+  });
+
+  document.getElementById('dressChoices').addEventListener('change', function () {
+    var sel = document.querySelector('input[name="dress"]:checked');
+    var noClothes = !!sel && sel.value === 'no clothes';
+    finishBtn.disabled = !sel || noClothes;
+    document.getElementById('wtf').hidden = !noClothes;
+  });
+
+  var rateNext = document.getElementById('rateNext');
+  var rateCount = document.getElementById('rateCount');
+  var ACTIVITIES = ['Wreckroom', 'Bowling', 'Go-karting', 'Clubbing', 'Shopping', 'Go for a drive', 'Get food', 'Plane spotting', 'Countryside walk', 'Christmas markets'];
+  var ratings = {};
+  var ratesEl = document.getElementById('rates');
+  ACTIVITIES.forEach(function (name, idx) {
+    var row = document.createElement('div'); row.className = 'rate-row unset';
+    var lab = document.createElement('label'); lab.setAttribute('for', 'r' + idx); lab.textContent = name;
+    var val = document.createElement('span'); val.className = 'rate-val'; val.textContent = '-';
+    var inp = document.createElement('input'); inp.type = 'range'; inp.min = 1; inp.max = 10; inp.step = 1; inp.value = 5; inp.id = 'r' + idx;
+    var set = function () {
+      ratings[name] = +inp.value; val.textContent = inp.value; row.classList.remove('unset');
+      var left = ACTIVITIES.length - Object.keys(ratings).length;
+      rateNext.disabled = left > 0;
+      rateCount.textContent = left > 0 ? left + ' left to rate' : 'All rated';
+    };
+    inp.addEventListener('input', set);
+    inp.addEventListener('change', set);
+    row.appendChild(lab); row.appendChild(val); row.appendChild(inp); ratesEl.appendChild(row);
+  });
+  rateCount.textContent = ACTIVITIES.length + ' left to rate';
+
+  finishBtn.addEventListener('click', function () {
+    var sel = document.querySelector('input[name="dress"]:checked');
+    if (!chosen || !sel || sel.value === 'no clothes') return;
+    dressCard.hidden = true;
+    rateCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  document.getElementById('rateBack').addEventListener('click', function () {
+    rateCard.hidden = true;
+    dressCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  rateNext.addEventListener('click', function () {
+    if (rateNext.disabled) return;
+    rateCard.hidden = true;
+    timeCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  var timeNext = document.getElementById('timeNext');
+  document.getElementById('timeChoices').addEventListener('change', function () { timeNext.disabled = false; });
+
+  document.getElementById('timeBack').addEventListener('click', function () {
+    timeCard.hidden = true;
+    rateCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  timeNext.addEventListener('click', function () {
+    if (timeNext.disabled) return;
+    timeCard.hidden = true;
+    bevCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  var bevNext = document.getElementById('bevNext');
+  document.getElementById('bevChoices').addEventListener('change', function () { bevNext.disabled = false; });
+
+  document.getElementById('bevBack').addEventListener('click', function () {
+    bevCard.hidden = true;
+    timeCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  bevNext.addEventListener('click', function () {
+    if (bevNext.disabled) return;
+    bevCard.hidden = true;
+    finalCard.hidden = false;
+    window.scrollTo(0, 0);
+    startFinale();
+  });
+
+  document.getElementById('finalBack').addEventListener('click', function () {
+    stopFinale();
+    finalCard.hidden = true;
+    bevCard.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  // ---- the finale ----
+  var CAPY = '<svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="64" width="14" height="20" rx="6" fill="#8a5a3a"/><rect x="84" y="64" width="14" height="20" rx="6" fill="#8a5a3a"/><ellipse cx="62" cy="52" rx="48" ry="26" fill="#b9825a"/><rect x="88" y="22" width="44" height="40" rx="18" fill="#b9825a"/><rect x="108" y="34" width="26" height="28" rx="12" fill="#9c6a47"/><ellipse cx="128" cy="40" rx="5" ry="4" fill="#3a2013"/><circle cx="104" cy="36" r="3.6" fill="#2b170d"/><circle cx="105" cy="35" r="1.1" fill="#fff"/><circle cx="96" cy="24" r="6" fill="#9c6a47"/><ellipse cx="116" cy="50" rx="9" ry="1.8" fill="#3a2013" opacity=".5"/></svg>';
+  var CAPY_URI = 'data:image/svg+xml;utf8,' + encodeURIComponent(CAPY);
+
+  function capyRain(n) {
+    for (var i = 0; i < n; i++) {
+      var im = document.createElement('img');
+      im.src = CAPY_URI; im.alt = '';
+      im.style.left = (Math.random() * 100) + '%';
+      im.style.width = (44 + Math.random() * 56) + 'px';
+      im.style.opacity = (0.7 + Math.random() * 0.3).toFixed(2);
+      im.style.setProperty('--sway', (Math.random() * 120 - 60).toFixed(0) + 'px');
+      im.style.setProperty('--spin', (Math.random() * 160 - 80).toFixed(0) + 'deg');
+      im.style.animationDuration = (5 + Math.random() * 6).toFixed(1) + 's';
+      im.style.animationDelay = (-Math.random() * 6).toFixed(1) + 's';
+      pbRain.appendChild(im);
+    }
+  }
+
+  function stopFinale() {
+    runId++;
+    document.body.classList.remove('drama');
+    f1.textContent = ''; f2.textContent = ''; fbig.hidden = true;
+    f1.classList.remove('caret2'); f2.classList.remove('caret2');
+    pbEl.classList.remove('show'); pbEl.innerHTML = '';
+    pbRain.innerHTML = '';
+    yes1.disabled = true; yes2.disabled = true;
+    mainEl.classList.remove('shake');
+  }
+
+  function startFinale() {
+    stopFinale();
+    var my = runId;
+    var alive = function () { return my === runId; };
+    var wait = function (ms, fn) { setTimeout(function () { if (alive()) fn(); }, ms); };
+    var type = function (el, text, speed, done) {
+      var i = 0; el.classList.add('caret2');
+      (function tick() {
+        if (!alive()) return;
+        i++; el.textContent = text.slice(0, i);
+        if (i >= text.length) { wait(500, function () { el.classList.remove('caret2'); }); done(); return; }
+        var ch = text.charAt(i - 1);
+        setTimeout(tick, ch === '.' ? 380 : speed + Math.random() * 50);
+      })();
+    };
+    var reveal = function () {
+      fbig.hidden = false;
+      pbEl.innerHTML = CAPY; pbEl.classList.add('show');
+      mainEl.classList.remove('shake'); void mainEl.offsetWidth; mainEl.classList.add('shake');
+      capyRain(window.innerWidth < 600 ? 10 : 18);
+      wait(1000, function () { yes1.disabled = false; yes2.disabled = false; });
+    };
+    if (reduceMotion) {
+      document.body.classList.add('drama');
+      f1.textContent = 'And finally...'; f2.textContent = 'the most important question';
+      fbig.hidden = false; pbEl.innerHTML = CAPY; pbEl.classList.add('show');
+      yes1.disabled = false; yes2.disabled = false;
+      return;
+    }
+    wait(250, function () { document.body.classList.add('drama'); });
+    wait(900, function () {
+      type(f1, 'And finally...', 110, function () {
+        wait(1300, function () {
+          type(f2, 'the most important question', 65, function () {
+            wait(1700, reveal);
+          });
+        });
+      });
+    });
+  }
+
+  function sendAnswer() {
+    var sel = document.querySelector('input[name="dress"]:checked');
+    var tm = document.querySelector('input[name="time"]:checked');
+    var bv = document.querySelector('input[name="bev"]:checked');
+    if (!chosen || !sel || !tm || !bv) return;
+    capyRain(14);
+    var lines = ACTIVITIES.map(function (n) { return n + ': ' + ratings[n] + '/10'; });
+    answerText.textContent = "Hi! I'd love a second date on " + longFmt(chosen) + ".\nPreferred time: " + tm.value +
+      "\nDress code: " + sel.value + "\nPreferred beverage: " + bv.value +
+      "\nCan Pearybara come? Yes!\n\nMy ratings:\n" + lines.join('\n') + "\n\n- Elodie";
+    setTimeout(function () {
+      stopFinale();
+      finalCard.hidden = true;
+      answer.hidden = false;
+      answer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 900);
+  }
+  yes1.addEventListener('click', sendAnswer);
+  yes2.addEventListener('click', sendAnswer);
+
+  document.getElementById('editBtn').addEventListener('click', function () {
+    answer.hidden = true;
+    dateCard.hidden = false;
+    copyBtn.textContent = 'Copy my answer';
+  });
+
+  copyBtn.addEventListener('click', function () {
+    var done = function () { copyBtn.textContent = 'Copied! Now send it to me 💌'; };
+    var fallback = function () {
+      var r = document.createRange();
+      r.selectNodeContents(answerText);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copyBtn.textContent = 'Selected, press copy';
+    };
+    try {
+      navigator.clipboard.writeText(answerText.textContent).then(done, fallback);
+    } catch (err) { fallback(); }
+  });
+</script>
